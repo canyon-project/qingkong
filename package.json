@@ -37,6 +37,10 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
+  "overrides": {
+    "v8-debug": "npm:noop@1.0.0",
+    "v8-profiler": "npm:noop@1.0.0"
+  },
   "pnpm": {
     "overrides": {
       "v8-debug": "npm:noop@1.0.0",
