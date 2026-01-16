@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React19Compat from "./components/React19Compat";
+import PWAInstaller from "./components/PWAInstaller";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,6 +17,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "晴空单向历",
   description: "记录每一天的美好",
+  manifest: "/manifest.json",
+  themeColor: "#FF2442",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "晴空单向历",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover",
+  },
 };
 
 export default function RootLayout({
@@ -30,6 +45,7 @@ export default function RootLayout({
       >
         <React19Compat />
         {children}
+        <PWAInstaller />
       </body>
     </html>
   );
