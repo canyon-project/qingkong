@@ -5,6 +5,7 @@ import { Card, Input, TextArea, Button, Toast, ImageUploader, NavBar } from 'ant
 import { getNoteById, updateNote, deleteNote } from '../../note-actions';
 import NoteCard from '../../components/NoteCard';
 import type { ImageUploadItem } from 'antd-mobile/es/components/image-uploader';
+import { compressImage } from '@/lib/image-compress';
 
 export default function NoteDetailPage() {
   const params = useParams();
@@ -58,18 +59,27 @@ export default function NoteDetailPage() {
   };
 
   const handleImageUpload = async (file: File): Promise<ImageUploadItem> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64 = reader.result as string;
-        resolve({
-          url: base64,
-          thumbnailUrl: base64,
-        });
+    try {
+      // 压缩图片到 50KB 以内
+      const compressedBase64 = await compressImage(file, {
+        maxSizeKB: 50,
+        maxWidth: 1920,
+        maxHeight: 1920,
+        quality: 0.8,
+      });
+
+      return {
+        url: compressedBase64,
+        thumbnailUrl: compressedBase64,
       };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
+    } catch (error) {
+      console.error('图片压缩失败:', error);
+      Toast.show({
+        icon: 'fail',
+        content: '图片压缩失败，请重试',
+      });
+      throw error;
+    }
   };
 
   const handleUpdate = async () => {
