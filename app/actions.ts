@@ -19,17 +19,21 @@ export async function getUsers() {
 
 export async function createUser(formData: FormData) {
   try {
-    const email = formData.get("email") as string;
-    const name = formData.get("name") as string | null;
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
 
-    if (!email) {
-      return { success: false, error: "邮箱不能为空" };
+    if (!username) {
+      return { success: false, error: "用户名不能为空" };
+    }
+
+    if (!password) {
+      return { success: false, error: "密码不能为空" };
     }
 
     const user = await prisma.user.create({
       data: {
-        email,
-        name: name || null,
+        username,
+        password,
       },
     });
 
@@ -38,7 +42,7 @@ export async function createUser(formData: FormData) {
   } catch (error: any) {
     console.error("Error creating user:", error);
     if (error.code === "P2002") {
-      return { success: false, error: "该邮箱已存在" };
+      return { success: false, error: "该用户名已存在" };
     }
     return { success: false, error: "创建用户失败" };
   }
