@@ -3,6 +3,7 @@
   "short_name": "晴空",
   "description": "记录每一天的美好",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#FF2442",
