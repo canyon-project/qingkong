@@ -15,7 +15,8 @@
     "db:sql": "prisma migrate diff --from-empty --to-schema prisma/schema.prisma --script",
     "db:sql:save": "prisma migrate diff --from-empty --to-schema prisma/schema.prisma --script > prisma/schema.sql",
     "db:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "generate-icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
